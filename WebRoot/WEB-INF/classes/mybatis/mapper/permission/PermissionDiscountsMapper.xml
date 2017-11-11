@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠折扣抢购表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-09-05 14:52:21
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.permission.PermissionDiscountsDao">
+
+	<resultMap id="permissionDiscountsResultMap" type="com.bluemobi.po.permission.PermissionDiscounts">
+		<id property="discountId" column="discount_id" />
+       <result property="title" column="title" />
+       <result property="startTime" column="start_time" />
+       <result property="endTime" column="end_time" />
+       <result property="price" column="price" />
+       <result property="sku" column="sku" />
+       <result property="buynumber" column="buynumber" />
+       <result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="permissionDiscountsResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="permissionDiscountsResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.permission.PermissionDiscounts" useGeneratedKeys="true" keyProperty="discountId" >
+	   insert into permission_discounts (
+	     discount_id,
+	     title,
+	     start_time,
+	     end_time,
+	     price,
+	     sku,
+	     buynumber,
+	     ctime
+	   )values (
+	     #{discountId},
+	     #{title},
+	     #{startTime},
+	     #{endTime},
+	     #{price},
+	     #{sku},
+	     #{buynumber},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.permission.PermissionDiscounts">
+		update permission_discounts
+		<set>
+			<if test="discountId != null">
+				discount_id=#{discountId},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="startTime != null">
+				start_time=#{startTime},
+			</if>
+			<if test="endTime != null">
+				end_time=#{endTime},
+			</if>
+			<if test="price != null">
+				price=#{price},
+			</if>
+			<if test="sku != null">
+				sku=#{sku},
+			</if>
+			<if test="buynumber != null">
+				buynumber=#{buynumber},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+		</set>
+		<where>
+			discount_id=#{discountId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     permission_discounts 
+	   where 
+	    discount_id=#{discountId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="permissionDiscountsResultMap">
+	   select 
+	    discount_id,
+	    title,
+	    start_time,
+	    end_time,
+	    price,
+	    sku,
+	    buynumber,
+	    ctime
+	   from permission_discounts
+	   where 
+	    discount_id=#{discountId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="permissionDiscountsResultMap">
+	   select 
+	     discount_id,
+	     title,
+	     start_time,
+	     end_time,
+	     price,
+	     sku,
+	     buynumber,
+	     ctime
+	   from permission_discounts
+	   <where>
+	     <if test="discountId != null">
+	        discount_id=#{discountId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="startTime != null">
+	        and start_time=#{startTime}
+	     </if>
+	     <if test="endTime != null">
+	        and end_time=#{endTime}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="sku != null">
+	        and sku=#{sku}
+	     </if>
+	     <if test="buynumber != null">
+	        and buynumber=#{buynumber}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    discount_id,
+	    title,
+	    start_time,
+	    end_time,
+	    price,
+	    sku,
+	    buynumber,
+	    ctime
+	   from permission_discounts
+	   where 
+	    discount_id=#{discountId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     discount_id,
+	     title,
+	     start_time,
+	     end_time,
+	     price,
+	     sku,
+	     buynumber,
+	     ctime
+	   from permission_discounts
+	   <where>
+	     <if test="discountId != null">
+	        discount_id=#{discountId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="startTime != null">
+	        and start_time=#{startTime}
+	     </if>
+	     <if test="endTime != null">
+	        and end_time=#{endTime}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="sku != null">
+	        and sku=#{sku}
+	     </if>
+	     <if test="buynumber != null">
+	        and buynumber=#{buynumber}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     discount_id,
+	     title,
+	     start_time,
+	     end_time,
+	     price,
+	     sku,
+	     buynumber,
+	     ctime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from permission_discounts
+	   <where>
+	     <if test="discountId != null">
+	        discount_id=#{discountId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="startTime != null">
+	        and start_time=#{startTime}
+	     </if>
+	     <if test="endTime != null">
+	        and end_time=#{endTime}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="sku != null">
+	        and sku=#{sku}
+	     </if>
+	     <if test="buynumber != null">
+	        and buynumber=#{buynumber}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

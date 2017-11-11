@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠券使用情况表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-09-06 17:29:08
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.coupon.CouponListingDao">
+
+	<resultMap id="couponListingResultMap" type="com.bluemobi.po.coupon.CouponListing">
+		<id property="id" column="id" />
+       <result property="userId" column="user_id" />
+       <result property="merchantId" column="merchant_id" />
+       <result property="couponId" column="coupon_id" />
+       <result property="code" column="code" />
+       <result property="status" column="status" />
+       <result property="orderCode" column="order_code" />
+       <result property="isDel" column="is_del" />
+       <result property="isFailure" column="is_failure" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="couponListingResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="couponListingResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.coupon.CouponListing" useGeneratedKeys="true" keyProperty="id" >
+	   insert into coupon_listing (
+	     id,
+	     user_id,
+	     merchant_id,
+	     coupon_id,
+	     code,
+	     status,
+	     order_code,
+	     is_del,
+	     is_failure,
+	     ctime,
+	     mtime
+	   )values (
+	     #{id},
+	     #{userId},
+	     #{merchantId},
+	     #{couponId},
+	     #{code},
+	     #{status},
+	     #{orderCode},
+	     #{isDel},
+	     #{isFailure},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.coupon.CouponListing">
+		update coupon_listing
+		<set>
+			<if test="id != null">
+				id=#{id},
+			</if>
+			<if test="userId != null">
+				user_id=#{userId},
+			</if>
+			<if test="merchantId != null">
+				merchant_id=#{merchantId},
+			</if>
+			<if test="couponId != null">
+				coupon_id=#{couponId},
+			</if>
+			<if test="code != null">
+				code=#{code},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="orderCode != null">
+				order_code=#{orderCode},
+			</if>
+			<if test="isDel != null">
+				is_del=#{isDel},
+			</if>
+			<if test="isFailure != null">
+				is_failure=#{isFailure},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     coupon_listing 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="couponListingResultMap">
+	   select 
+	    id,
+	    user_id,
+	    merchant_id,
+	    coupon_id,
+	    code,
+	    status,
+	    order_code,
+	    is_del,
+	    is_failure,
+	    ctime,
+	    mtime
+	   from coupon_listing
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="couponListingResultMap">
+	   select 
+	     id,
+	     user_id,
+	     merchant_id,
+	     coupon_id,
+	     code,
+	     status,
+	     order_code,
+	     is_del,
+	     is_failure,
+	     ctime,
+	     mtime
+	   from coupon_listing
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userId != null">
+	        and user_id=#{userId}
+	     </if>
+	     <if test="merchantId != null">
+	        and merchant_id=#{merchantId}
+	     </if>
+	     <if test="couponId != null">
+	        and coupon_id=#{couponId}
+	     </if>
+	     <if test="code != null">
+	        and code=#{code}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="orderCode != null">
+	        and order_code=#{orderCode}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="isFailure != null">
+	        and is_failure=#{isFailure}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    user_id,
+	    merchant_id,
+	    coupon_id,
+	    code,
+	    status,
+	    order_code,
+	    is_del,
+	    is_failure,
+	    ctime,
+	    mtime
+	   from coupon_listing
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     user_id,
+	     merchant_id,
+	     coupon_id,
+	     code,
+	     status,
+	     order_code,
+	     is_del,
+	     is_failure,
+	     ctime,
+	     mtime
+	   from coupon_listing
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userId != null">
+	        and user_id=#{userId}
+	     </if>
+	     <if test="merchantId != null">
+	        and merchant_id=#{merchantId}
+	     </if>
+	     <if test="couponId != null">
+	        and coupon_id=#{couponId}
+	     </if>
+	     <if test="code != null">
+	        and code=#{code}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="orderCode != null">
+	        and order_code=#{orderCode}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="isFailure != null">
+	        and is_failure=#{isFailure}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     user_id,
+	     merchant_id,
+	     coupon_id,
+	     code,
+	     status,
+	     order_code,
+	     is_del,
+	     is_failure,
+	     ctime,
+	     mtime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from coupon_listing
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userId != null">
+	        and user_id=#{userId}
+	     </if>
+	     <if test="merchantId != null">
+	        and merchant_id=#{merchantId}
+	     </if>
+	     <if test="couponId != null">
+	        and coupon_id=#{couponId}
+	     </if>
+	     <if test="code != null">
+	        and code=#{code}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="orderCode != null">
+	        and order_code=#{orderCode}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="isFailure != null">
+	        and is_failure=#{isFailure}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

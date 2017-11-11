@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【商品sku】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-09
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.goods.GoodsSkuDao">
+
+	<resultMap id="goodsSkuResultMap" type="com.bluemobi.po.goods.GoodsSku">
+		<id property="skuId" column="sku_id" />
+       <result property="merchantId" column="merchant_id" />
+       <result property="spuId" column="spu_id" />
+       <result property="sku" column="sku" />
+       <result property="propertys" column="propertys" />
+       <result property="pics" column="pics" />
+       <result property="stock" column="stock" />
+       <result property="stockWarn" column="stock_warn" />
+       <result property="originalPrice" column="original_price" />
+       <result property="price" column="price" />
+       <result property="pointPrice" column="point_price" />
+       <result property="mixPrice" column="mix_price" />
+       <result property="mixPointPrice" column="mix_point_price" />
+       <result property="chargeRate" column="charge_rate" />
+       <result property="settlementPrice" column="settlement_price" />
+       <result property="salesQuantity" column="sales_quantity" />
+       <result property="salesAmount" column="sales_amount" />
+       <result property="collectCount" column="collect_count" />
+       <result property="commentCount" column="comment_count" />
+       <result property="weight" column="weight" />
+       <result property="sortOrder" column="sort_order" />
+       <result property="status" column="status" />
+       <result property="isShow" column="is_show" />
+       <result property="isDel" column="is_del" />
+       <result property="creator" column="creator" />
+       <result property="ctime" column="ctime" />
+       <result property="modifier" column="modifier" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="goodsSkuResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="goodsSkuResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.goods.GoodsSku" useGeneratedKeys="true" keyProperty="skuId" >
+	   insert into goods_sku (
+	     sku_id,
+	     merchant_id,
+	     spu_id,
+	     sku,
+	     propertys,
+	     pics,
+	     stock,
+	     stock_warn,
+	     original_price,
+	     price,
+	     point_price,
+	     mix_price,
+	     mix_point_price,
+	     charge_rate,
+	     settlement_price,
+	     sales_quantity,
+	     sales_amount,
+	     collect_count,
+	     comment_count,
+	     weight,
+	     sort_order,
+	     status,
+	     is_show,
+	     is_del,
+	     creator,
+	     ctime,
+	     modifier,
+	     mtime
+	   )values (
+	     #{skuId},
+	     #{merchantId},
+	     #{spuId},
+	     #{sku},
+	     #{propertys},
+	     #{pics},
+	     #{stock},
+	     #{stockWarn},
+	     #{originalPrice},
+	     #{price},
+	     #{pointPrice},
+	     #{mixPrice},
+	     #{mixPointPrice},
+	     #{chargeRate},
+	     #{settlementPrice},
+	     #{salesQuantity},
+	     #{salesAmount},
+	     #{collectCount},
+	     #{commentCount},
+	     #{weight},
+	     #{sortOrder},
+	     #{status},
+	     #{isShow},
+	     #{isDel},
+	     #{creator},
+	     #{ctime},
+	     #{modifier},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.goods.GoodsSku">
+		update goods_sku
+		<set>
+			<if test="skuId != null">
+				sku_id=#{skuId},
+			</if>
+			<if test="merchantId != null">
+				merchant_id=#{merchantId},
+			</if>
+			<if test="spuId != null">
+				spu_id=#{spuId},
+			</if>
+			<if test="sku != null">
+				sku=#{sku},
+			</if>
+			<if test="propertys != null">
+				propertys=#{propertys},
+			</if>
+			<if test="pics != null">
+				pics=#{pics},
+			</if>
+			<if test="stock != null">
+				stock=#{stock},
+			</if>
+			<if test="stockWarn != null">
+				stock_warn=#{stockWarn},
+			</if>
+			<if test="originalPrice != null">
+				original_price=#{originalPrice},
+			</if>
+			<if test="price != null">
+				price=#{price},
+			</if>
+			<if test="pointPrice != null">
+				point_price=#{pointPrice},
+			</if>
+			<if test="mixPrice != null">
+				mix_price=#{mixPrice},
+			</if>
+			<if test="mixPointPrice != null">
+				mix_point_price=#{mixPointPrice},
+			</if>
+			<if test="chargeRate != null">
+				charge_rate=#{chargeRate},
+			</if>
+			<if test="settlementPrice != null">
+				settlement_price=#{settlementPrice},
+			</if>
+			<if test="salesQuantity != null">
+				sales_quantity=#{salesQuantity},
+			</if>
+			<if test="salesAmount != null">
+				sales_amount=#{salesAmount},
+			</if>
+			<if test="collectCount != null">
+				collect_count=#{collectCount},
+			</if>
+			<if test="commentCount != null">
+				comment_count=#{commentCount},
+			</if>
+			<if test="weight != null">
+				weight=#{weight},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="isShow != null">
+				is_show=#{isShow},
+			</if>
+			<if test="isDel != null">
+				is_del=#{isDel},
+			</if>
+			<if test="creator != null">
+				creator=#{creator},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="modifier != null">
+				modifier=#{modifier},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			sku_id=#{skuId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     goods_sku 
+	   where 
+	    sku_id=#{skuId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="goodsSkuResultMap">
+	   select 
+	    sku_id,
+	    merchant_id,
+	    spu_id,
+	    sku,
+	    propertys,
+	    pics,
+	    stock,
+	    stock_warn,
+	    original_price,
+	    price,
+	    point_price,
+	    mix_price,
+	    mix_point_price,
+	    charge_rate,
+	    settlement_price,
+	    sales_quantity,
+	    sales_amount,
+	    collect_count,
+	    comment_count,
+	    weight,
+	    sort_order,
+	    status,
+	    is_show,
+	    is_del,
+	    creator,
+	    ctime,
+	    modifier,
+	    mtime
+	   from goods_sku
+	   where 
+	    sku_id=#{skuId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="goodsSkuResultMap">
+	   select 
+	     sku_id,
+	     merchant_id,
+	     spu_id,
+	     sku,
+	     propertys,
+	     pics,
+	     stock,
+	     stock_warn,
+	     original_price,
+	     price,
+	     point_price,
+	     mix_price,
+	     mix_point_price,
+	     charge_rate,
+	     settlement_price,
+	     sales_quantity,
+	     sales_amount,
+	     collect_count,
+	     comment_count,
+	     weight,
+	     sort_order,
+	     status,
+	     is_show,
+	     is_del,
+	     creator,
+	     ctime,
+	     modifier,
+	     mtime
+	   from goods_sku
+	   <where>
+	     <if test="skuId != null">
+	        sku_id=#{skuId}
+	     </if>
+	     <if test="merchantId != null">
+	        and merchant_id=#{merchantId}
+	     </if>
+	     <if test="spuId != null">
+	        and spu_id=#{spuId}
+	     </if>
+	     <if test="sku != null">
+	        and sku=#{sku}
+	     </if>
+	     <if test="propertys != null">
+	        and propertys=#{propertys}
+	     </if>
+	     <if test="pics != null">
+	        and pics=#{pics}
+	     </if>
+	     <if test="stock != null">
+	        and stock=#{stock}
+	     </if>
+	     <if test="stockWarn != null">
+	        and stock_warn=#{stockWarn}
+	     </if>
+	     <if test="originalPrice != null">
+	        and original_price=#{originalPrice}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="pointPrice != null">
+	        and point_price=#{pointPrice}
+	     </if>
+	     <if test="mixPrice != null">
+	        and mix_price=#{mixPrice}
+	     </if>
+	     <if test="mixPointPrice != null">
+	        and mix_point_price=#{mixPointPrice}
+	     </if>
+	     <if test="chargeRate != null">
+	        and charge_rate=#{chargeRate}
+	     </if>
+	     <if test="settlementPrice != null">
+	        and settlement_price=#{settlementPrice}
+	     </if>
+	     <if test="salesQuantity != null">
+	        and sales_quantity=#{salesQuantity}
+	     </if>
+	     <if test="salesAmount != null">
+	        and sales_amount=#{salesAmount}
+	     </if>
+	     <if test="collectCount != null">
+	        and collect_count=#{collectCount}
+	     </if>
+	     <if test="commentCount != null">
+	        and comment_count=#{commentCount}
+	     </if>
+	     <if test="weight != null">
+	        and weight=#{weight}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isShow != null">
+	        and is_show=#{isShow}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="creator != null">
+	        and creator=#{creator}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="modifier != null">
+	        and modifier=#{modifier}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    sku_id,
+	    merchant_id,
+	    spu_id,
+	    sku,
+	    propertys,
+	    pics,
+	    stock,
+	    stock_warn,
+	    original_price,
+	    price,
+	    point_price,
+	    mix_price,
+	    mix_point_price,
+	    charge_rate,
+	    settlement_price,
+	    sales_quantity,
+	    sales_amount,
+	    collect_count,
+	    comment_count,
+	    weight,
+	    sort_order,
+	    status,
+	    is_show,
+	    is_del,
+	    creator,
+	    ctime,
+	    modifier,
+	    mtime
+	   from goods_sku
+	   where 
+	    sku_id=#{skuId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     sku_id,
+	     merchant_id,
+	     spu_id,
+	     sku,
+	     propertys,
+	     pics,
+	     stock,
+	     stock_warn,
+	     original_price,
+	     price,
+	     point_price,
+	     mix_price,
+	     mix_point_price,
+	     charge_rate,
+	     settlement_price,
+	     sales_quantity,
+	     sales_amount,
+	     collect_count,
+	     comment_count,
+	     weight,
+	     sort_order,
+	     status,
+	     is_show,
+	     is_del,
+	     creator,
+	     ctime,
+	     modifier,
+	     mtime
+	   from goods_sku
+	   <where>
+	     <if test="skuId != null">
+	        sku_id=#{skuId}
+	     </if>
+	     <if test="merchantId != null">
+	        and merchant_id=#{merchantId}
+	     </if>
+	     <if test="spuId != null">
+	        and spu_id=#{spuId}
+	     </if>
+	     <if test="sku != null">
+	        and sku=#{sku}
+	     </if>
+	     <if test="propertys != null">
+	        and propertys=#{propertys}
+	     </if>
+	     <if test="pics != null">
+	        and pics=#{pics}
+	     </if>
+	     <if test="stock != null">
+	        and stock=#{stock}
+	     </if>
+	     <if test="stockWarn != null">
+	        and stock_warn=#{stockWarn}
+	     </if>
+	     <if test="originalPrice != null">
+	        and original_price=#{originalPrice}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="pointPrice != null">
+	        and point_price=#{pointPrice}
+	     </if>
+	     <if test="mixPrice != null">
+	        and mix_price=#{mixPrice}
+	     </if>
+	     <if test="mixPointPrice != null">
+	        and mix_point_price=#{mixPointPrice}
+	     </if>
+	     <if test="chargeRate != null">
+	        and charge_rate=#{chargeRate}
+	     </if>
+	     <if test="settlementPrice != null">
+	        and settlement_price=#{settlementPrice}
+	     </if>
+	     <if test="salesQuantity != null">
+	        and sales_quantity=#{salesQuantity}
+	     </if>
+	     <if test="salesAmount != null">
+	        and sales_amount=#{salesAmount}
+	     </if>
+	     <if test="collectCount != null">
+	        and collect_count=#{collectCount}
+	     </if>
+	     <if test="commentCount != null">
+	        and comment_count=#{commentCount}
+	     </if>
+	     <if test="weight != null">
+	        and weight=#{weight}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isShow != null">
+	        and is_show=#{isShow}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="creator != null">
+	        and creator=#{creator}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="modifier != null">
+	        and modifier=#{modifier}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     sku_id,
+	     merchant_id,
+	     spu_id,
+	     sku,
+	     propertys,
+	     pics,
+	     stock,
+	     stock_warn,
+	     original_price,
+	     price,
+	     point_price,
+	     mix_price,
+	     mix_point_price,
+	     charge_rate,
+	     settlement_price,
+	     sales_quantity,
+	     sales_amount,
+	     collect_count,
+	     comment_count,
+	     weight,
+	     sort_order,
+	     status,
+	     is_show,
+	     is_del,
+	     creator,
+	     ctime,
+	     modifier,
+	     mtime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from goods_sku
+	   <where>
+	     <if test="skuId != null">
+	        sku_id=#{skuId}
+	     </if>
+	     <if test="merchantId != null">
+	        and merchant_id=#{merchantId}
+	     </if>
+	     <if test="spuId != null">
+	        and spu_id=#{spuId}
+	     </if>
+	     <if test="sku != null">
+	        and sku=#{sku}
+	     </if>
+	     <if test="propertys != null">
+	        and propertys=#{propertys}
+	     </if>
+	     <if test="pics != null">
+	        and pics=#{pics}
+	     </if>
+	     <if test="stock != null">
+	        and stock=#{stock}
+	     </if>
+	     <if test="stockWarn != null">
+	        and stock_warn=#{stockWarn}
+	     </if>
+	     <if test="originalPrice != null">
+	        and original_price=#{originalPrice}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="pointPrice != null">
+	        and point_price=#{pointPrice}
+	     </if>
+	     <if test="mixPrice != null">
+	        and mix_price=#{mixPrice}
+	     </if>
+	     <if test="mixPointPrice != null">
+	        and mix_point_price=#{mixPointPrice}
+	     </if>
+	     <if test="chargeRate != null">
+	        and charge_rate=#{chargeRate}
+	     </if>
+	     <if test="settlementPrice != null">
+	        and settlement_price=#{settlementPrice}
+	     </if>
+	     <if test="salesQuantity != null">
+	        and sales_quantity=#{salesQuantity}
+	     </if>
+	     <if test="salesAmount != null">
+	        and sales_amount=#{salesAmount}
+	     </if>
+	     <if test="collectCount != null">
+	        and collect_count=#{collectCount}
+	     </if>
+	     <if test="commentCount != null">
+	        and comment_count=#{commentCount}
+	     </if>
+	     <if test="weight != null">
+	        and weight=#{weight}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isShow != null">
+	        and is_show=#{isShow}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="creator != null">
+	        and creator=#{creator}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="modifier != null">
+	        and modifier=#{modifier}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

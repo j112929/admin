@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠券分类表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-09-06 17:29:08
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.coupon.CouponCategoryDao">
+
+	<resultMap id="couponCategoryResultMap" type="com.bluemobi.po.coupon.CouponCategory">
+		<id property="id" column="id" />
+       <result property="categoryItitle" column="category_ititle" />
+       <result property="categoryParentName" column="category_parent_name" />
+       <result property="categoryGrade" column="category_grade" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="couponCategoryResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="couponCategoryResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.coupon.CouponCategory" useGeneratedKeys="true" keyProperty="id" >
+	   insert into coupon_category (
+	     id,
+	     category_ititle,
+	     category_parent_name,
+	     category_grade
+	   )values (
+	     #{id},
+	     #{categoryItitle},
+	     #{categoryParentName},
+	     #{categoryGrade}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.coupon.CouponCategory">
+		update coupon_category
+		<set>
+			<if test="id != null">
+				id=#{id},
+			</if>
+			<if test="categoryItitle != null">
+				category_ititle=#{categoryItitle},
+			</if>
+			<if test="categoryParentName != null">
+				category_parent_name=#{categoryParentName},
+			</if>
+			<if test="categoryGrade != null">
+				category_grade=#{categoryGrade},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     coupon_category 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="couponCategoryResultMap">
+	   select 
+	    id,
+	    category_ititle,
+	    category_parent_name,
+	    category_grade
+	   from coupon_category
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="couponCategoryResultMap">
+	   select 
+	     id,
+	     category_ititle,
+	     category_parent_name,
+	     category_grade
+	   from coupon_category
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="categoryItitle != null">
+	        and category_ititle=#{categoryItitle}
+	     </if>
+	     <if test="categoryParentName != null">
+	        and category_parent_name=#{categoryParentName}
+	     </if>
+	     <if test="categoryGrade != null">
+	        and category_grade=#{categoryGrade}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    category_ititle,
+	    category_parent_name,
+	    category_grade
+	   from coupon_category
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     category_ititle,
+	     category_parent_name,
+	     category_grade
+	   from coupon_category
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="categoryItitle != null">
+	        and category_ititle=#{categoryItitle}
+	     </if>
+	     <if test="categoryParentName != null">
+	        and category_parent_name=#{categoryParentName}
+	     </if>
+	     <if test="categoryGrade != null">
+	        and category_grade=#{categoryGrade}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     category_ititle,
+	     category_parent_name,
+	     category_grade
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from coupon_category
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="categoryItitle != null">
+	        and category_ititle=#{categoryItitle}
+	     </if>
+	     <if test="categoryParentName != null">
+	        and category_parent_name=#{categoryParentName}
+	     </if>
+	     <if test="categoryGrade != null">
+	        and category_grade=#{categoryGrade}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

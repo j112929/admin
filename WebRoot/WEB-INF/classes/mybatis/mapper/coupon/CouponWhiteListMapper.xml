@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠券白名单表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-09-06 17:29:09
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.coupon.CouponWhiteListDao">
+
+	<resultMap id="couponWhiteListResultMap" type="com.bluemobi.po.coupon.CouponWhiteList">
+		<id property="id" column="id" />
+       <result property="couponId" column="coupon_id" />
+       <result property="codeId" column="code_id" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="couponWhiteListResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="couponWhiteListResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.coupon.CouponWhiteList" useGeneratedKeys="true" keyProperty="id" >
+	   insert into coupon_white_list (
+	     id,
+	     coupon_id,
+	     code_id
+	   )values (
+	     #{id},
+	     #{couponId},
+	     #{codeId}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.coupon.CouponWhiteList">
+		update coupon_white_list
+		<set>
+			<if test="id != null">
+				id=#{id},
+			</if>
+			<if test="couponId != null">
+				coupon_id=#{couponId},
+			</if>
+			<if test="codeId != null">
+				code_id=#{codeId},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     coupon_white_list 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="couponWhiteListResultMap">
+	   select 
+	    id,
+	    coupon_id,
+	    code_id
+	   from coupon_white_list
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="couponWhiteListResultMap">
+	   select 
+	     id,
+	     coupon_id,
+	     code_id
+	   from coupon_white_list
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="couponId != null">
+	        and coupon_id=#{couponId}
+	     </if>
+	     <if test="codeId != null">
+	        and code_id=#{codeId}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    coupon_id,
+	    code_id
+	   from coupon_white_list
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     coupon_id,
+	     code_id
+	   from coupon_white_list
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="couponId != null">
+	        and coupon_id=#{couponId}
+	     </if>
+	     <if test="codeId != null">
+	        and code_id=#{codeId}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     coupon_id,
+	     code_id
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from coupon_white_list
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="couponId != null">
+	        and coupon_id=#{couponId}
+	     </if>
+	     <if test="codeId != null">
+	        and code_id=#{codeId}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

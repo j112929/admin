@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【评论表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-09
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.common.CommonCommentDao">
+
+	<resultMap id="commonCommentResultMap" type="com.bluemobi.po.common.CommonComment">
+		<id property="id" column="id" />
+       <result property="userId" column="user_id" />
+       <result property="type" column="type" />
+       <result property="targetId" column="target_id" />
+       <result property="score" column="score" />
+       <result property="content" column="content" />
+       <result property="ctime" column="ctime" />
+       <result property="status" column="status" />
+       <!-- 附加字段(查询) -->
+       <result property="orderChildNo" column="order_child_no" />
+       <result property="orderType" column="order_type"/>
+       <result property="goodsName" column="goods_name" />
+       <result property="merchantName" column="merchant_name" />
+       <result property="userName" column="user_name" />
+       <result property="phone" column="phone" />
+       <result property="rankBase" column="rank_base" />
+       <result property="rankSpeed" column="rank_speed" />
+       <result property="rankService" column="rank_service" />
+       <result property="sumScore" column="sum_score" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="commonCommentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="commonCommentResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.common.CommonComment" useGeneratedKeys="true" keyProperty="id" >
+	   insert into common_comment (
+	     id,
+	     user_id,
+	     type,
+	     target_id,
+	     score,
+	     content,
+	     ctime,
+	     status
+	   )values (
+	     #{id},
+	     #{userId},
+	     #{type},
+	     #{targetId},
+	     #{score},
+	     #{content},
+	     #{ctime},
+	     #{status}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.common.CommonComment">
+		update common_comment
+		<set>
+			<if test="id != null">
+				id=#{id},
+			</if>
+			<if test="userId != null">
+				user_id=#{userId},
+			</if>
+			<if test="type != null">
+				type=#{type},
+			</if>
+			<if test="targetId != null">
+				target_id=#{targetId},
+			</if>
+			<if test="score != null">
+				score=#{score},
+			</if>
+			<if test="content != null">
+				content=#{content},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     common_comment 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="commonCommentResultMap">
+	   select 
+	    id,
+	    user_id,
+	    type,
+	    target_id,
+	    score,
+	    content,
+	    ctime,
+	    status
+	   from common_comment
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="commonCommentResultMap">
+	   select 
+	     id,
+	     user_id,
+	     type,
+	     target_id,
+	     score,
+	     content,
+	     ctime,
+	     status
+	   from common_comment
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userId != null">
+	        and user_id=#{userId}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="targetId != null">
+	        and target_id=#{targetId}
+	     </if>
+	     <if test="score != null">
+	        and score=#{score}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    user_id,
+	    type,
+	    target_id,
+	    score,
+	    content,
+	    ctime,
+	    status
+	   from common_comment
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     user_id,
+	     type,
+	     target_id,
+	     score,
+	     content,
+	     ctime,
+	     status
+	   from common_comment
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userId != null">
+	        and user_id=#{userId}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="targetId != null">
+	        and target_id=#{targetId}
+	     </if>
+	     <if test="score != null">
+	        and score=#{score}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+		select
+			c.id,
+			c.user_id,
+			c.type,
+			c.target_id,
+			c.content,
+		    oc.type order_type,
+			oi.order_child_no,
+			oi.goods_name,
+			cm.name merchant_name,
+			cu.user_name,
+			cu.phone,
+			c1.score rank_base,
+			c2.score rank_speed,
+			c3.score rank_service,
+			(select sum(score) from common_comment cc where cc.target_id = c.target_id )
+			sum_score,
+			c.ctime,
+			c.status
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+		from common_comment c
+		LEFT JOIN common_comment c1 ON c1.target_id = c.target_id and c1.type = 1
+		LEFT JOIN common_comment c2 on c2.target_id = c.target_id and c2.type =  2
+		LEFT JOIN common_comment c3 on c3.target_id = c.target_id and c3.type =  3
+		left join bts_order_items oi on oi.id = c.target_id and oi.is_comment = 1
+		left join bts_order_child oc on oc.order_child_no = oi.order_child_no
+		left join user cu on cu.user_id = c.user_id
+		left join merchant cm ON cm.merchant_id = oi.merchant_id 
+	   <where>
+	     <if test="id != null">
+	        c.id=#{id}
+	     </if>
+	     <if test="userId != null">
+	        and c.user_id=#{userId}
+	     </if>
+	     <if test="type != null">
+	        and c.type=#{type}
+	     </if>
+	     <if test="targetId != null">
+	        and c.target_id=#{targetId}
+	     </if>
+	     <if test="score != null">
+	        and c.score=#{score}
+	     </if>
+	     <if test="content != null">
+	        and c.content=#{content}
+	     </if>
+	     <if test="ctime != null">
+	        and c.ctime=#{ctime}
+	     </if>
+	     <if test="orderType != null">
+		     and oc.type=#{orderType}
+		 </if>
+	     <if test="startDate != null">
+				<![CDATA[
+			        and c.ctime >=#{startDate}
+			     ]]> 
+		    </if>
+		    <if test="endDate != null">
+		    	<![CDATA[
+		        and c.ctime <=#{endDate}
+		         ]]> 
+		    </if>
+	     <if test="status != null">
+	        and c.status=#{status}
+	     </if>
+	     <if test="key != null and key !=''">
+				and 
+				(
+				oi.order_child_no LIKE CONCAT('%', #{key}, '%') 
+				or oi.goods_name LIKE CONCAT('%', #{key},'%') 
+				or cm.name LIKE CONCAT('%', #{key},'%') 
+				or (select sum(score) from common_comment cc where cc.target_id = c.target_id ) = #{key}
+				)
+			</if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

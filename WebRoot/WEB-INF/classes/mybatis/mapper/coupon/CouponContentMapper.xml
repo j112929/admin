@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠券表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-09-06 17:29:08
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.coupon.CouponContentDao">
+
+	<resultMap id="couponContentResultMap" type="com.bluemobi.po.coupon.CouponContent">
+		<id property="couponId" column="coupon_id" />
+       <result property="couponType" column="coupon_type" />
+       <result property="categoryId" column="category_id" />
+       <result property="code" column="code" />
+       <result property="couponName" column="coupon_name" />
+       <result property="amount" column="amount" />
+       <result property="undertakeAmount" column="undertake_amount" />
+       <result property="bankSubsidy" column="bank_subsidy" />
+       <result property="count" column="count" />
+       <result property="validityStart" column="validity_start" />
+       <result property="validityEnd" column="validity_end" />
+       <result property="minLimitAmount" column="min_limit_amount" />
+       <result property="maxUseCount" column="max_use_count" />
+       <result property="useDetail" column="use_detail" />
+       <result property="useNotice" column="use_notice" />
+       <result property="publishDateStart" column="publish_date_start" />
+       <result property="publishDateEnd" column="publish_date_end" />
+       <result property="publishType" column="publish_type" />
+       <result property="publishPopulation" column="publish_population" />
+       <result property="pic" column="pic" />
+       <result property="auditStatus" column="audit_status" />
+       <result property="auditUserId" column="audit_user_id" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+       <result property="createUserId" column="create_user_id" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="couponContentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="couponContentResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.coupon.CouponContent" useGeneratedKeys="true" keyProperty="couponId" >
+	   insert into coupon_content (
+	     coupon_id,
+	     coupon_type,
+	     category_id,
+	     code,
+	     coupon_name,
+	     amount,
+	     undertake_amount,
+	     bank_subsidy,
+	     count,
+	     validity_start,
+	     validity_end,
+	     min_limit_amount,
+	     max_use_count,
+	     use_detail,
+	     use_notice,
+	     publish_date_start,
+	     publish_date_end,
+	     publish_type,
+	     publish_population,
+	     pic,
+	     audit_status,
+	     audit_user_id,
+	     ctime,
+	     mtime,
+	     create_user_id
+	   )values (
+	     #{couponId},
+	     #{couponType},
+	     #{categoryId},
+	     #{code},
+	     #{couponName},
+	     #{amount},
+	     #{undertakeAmount},
+	     #{bankSubsidy},
+	     #{count},
+	     #{validityStart},
+	     #{validityEnd},
+	     #{minLimitAmount},
+	     #{maxUseCount},
+	     #{useDetail},
+	     #{useNotice},
+	     #{publishDateStart},
+	     #{publishDateEnd},
+	     #{publishType},
+	     #{publishPopulation},
+	     #{pic},
+	     #{auditStatus},
+	     #{auditUserId},
+	     #{ctime},
+	     #{mtime},
+	     #{createUserId}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.coupon.CouponContent">
+		update coupon_content
+		<set>
+			<if test="couponId != null">
+				coupon_id=#{couponId},
+			</if>
+			<if test="couponType != null">
+				coupon_type=#{couponType},
+			</if>
+			<if test="categoryId != null">
+				category_id=#{categoryId},
+			</if>
+			<if test="code != null">
+				code=#{code},
+			</if>
+			<if test="couponName != null">
+				coupon_name=#{couponName},
+			</if>
+			<if test="amount != null">
+				amount=#{amount},
+			</if>
+			<if test="undertakeAmount != null">
+				undertake_amount=#{undertakeAmount},
+			</if>
+			<if test="bankSubsidy != null">
+				bank_subsidy=#{bankSubsidy},
+			</if>
+			<if test="count != null">
+				count=#{count},
+			</if>
+			<if test="validityStart != null">
+				validity_start=#{validityStart},
+			</if>
+			<if test="validityEnd != null">
+				validity_end=#{validityEnd},
+			</if>
+			<if test="minLimitAmount != null">
+				min_limit_amount=#{minLimitAmount},
+			</if>
+			<if test="maxUseCount != null">
+				max_use_count=#{maxUseCount},
+			</if>
+			<if test="useDetail != null">
+				use_detail=#{useDetail},
+			</if>
+			<if test="useNotice != null">
+				use_notice=#{useNotice},
+			</if>
+			<if test="publishDateStart != null">
+				publish_date_start=#{publishDateStart},
+			</if>
+			<if test="publishDateEnd != null">
+				publish_date_end=#{publishDateEnd},
+			</if>
+			<if test="publishType != null">
+				publish_type=#{publishType},
+			</if>
+			<if test="publishPopulation != null">
+				publish_population=#{publishPopulation},
+			</if>
+			<if test="pic != null">
+				pic=#{pic},
+			</if>
+			<if test="auditStatus != null">
+				audit_status=#{auditStatus},
+			</if>
+			<if test="auditUserId != null">
+				audit_user_id=#{auditUserId},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+			<if test="createUserId != null">
+				create_user_id=#{createUserId},
+			</if>
+		</set>
+		<where>
+			coupon_id=#{couponId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     coupon_content 
+	   where 
+	    coupon_id=#{couponId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="couponContentResultMap">
+	   select 
+	    coupon_id,
+	    coupon_type,
+	    category_id,
+	    code,
+	    coupon_name,
+	    amount,
+	    undertake_amount,
+	    bank_subsidy,
+	    count,
+	    validity_start,
+	    validity_end,
+	    min_limit_amount,
+	    max_use_count,
+	    use_detail,
+	    use_notice,
+	    publish_date_start,
+	    publish_date_end,
+	    publish_type,
+	    publish_population,
+	    pic,
+	    audit_status,
+	    audit_user_id,
+	    ctime,
+	    mtime,
+	    create_user_id
+	   from coupon_content
+	   where 
+	    coupon_id=#{couponId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="couponContentResultMap">
+	   select 
+	     coupon_id,
+	     coupon_type,
+	     category_id,
+	     code,
+	     coupon_name,
+	     amount,
+	     undertake_amount,
+	     bank_subsidy,
+	     count,
+	     validity_start,
+	     validity_end,
+	     min_limit_amount,
+	     max_use_count,
+	     use_detail,
+	     use_notice,
+	     publish_date_start,
+	     publish_date_end,
+	     publish_type,
+	     publish_population,
+	     pic,
+	     audit_status,
+	     audit_user_id,
+	     ctime,
+	     mtime,
+	     create_user_id
+	   from coupon_content
+	   <where>
+	     <if test="couponId != null">
+	        coupon_id=#{couponId}
+	     </if>
+	     <if test="couponType != null">
+	        and coupon_type=#{couponType}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="code != null">
+	        and code=#{code}
+	     </if>
+	     <if test="couponName != null">
+	        and coupon_name=#{couponName}
+	     </if>
+	     <if test="amount != null">
+	        and amount=#{amount}
+	     </if>
+	     <if test="undertakeAmount != null">
+	        and undertake_amount=#{undertakeAmount}
+	     </if>
+	     <if test="bankSubsidy != null">
+	        and bank_subsidy=#{bankSubsidy}
+	     </if>
+	     <if test="count != null">
+	        and count=#{count}
+	     </if>
+	     <if test="validityStart != null">
+	        and validity_start=#{validityStart}
+	     </if>
+	     <if test="validityEnd != null">
+	        and validity_end=#{validityEnd}
+	     </if>
+	     <if test="minLimitAmount != null">
+	        and min_limit_amount=#{minLimitAmount}
+	     </if>
+	     <if test="maxUseCount != null">
+	        and max_use_count=#{maxUseCount}
+	     </if>
+	     <if test="useDetail != null">
+	        and use_detail=#{useDetail}
+	     </if>
+	     <if test="useNotice != null">
+	        and use_notice=#{useNotice}
+	     </if>
+	     <if test="publishDateStart != null">
+	        and publish_date_start=#{publishDateStart}
+	     </if>
+	     <if test="publishDateEnd != null">
+	        and publish_date_end=#{publishDateEnd}
+	     </if>
+	     <if test="publishType != null">
+	        and publish_type=#{publishType}
+	     </if>
+	     <if test="publishPopulation != null">
+	        and publish_population=#{publishPopulation}
+	     </if>
+	     <if test="pic != null">
+	        and pic=#{pic}
+	     </if>
+	     <if test="auditStatus != null">
+	        and audit_status=#{auditStatus}
+	     </if>
+	     <if test="auditUserId != null">
+	        and audit_user_id=#{auditUserId}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="createUserId != null">
+	        and create_user_id=#{createUserId}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    coupon_id,
+	    coupon_type,
+	    category_id,
+	    code,
+	    coupon_name,
+	    amount,
+	    undertake_amount,
+	    bank_subsidy,
+	    count,
+	    validity_start,
+	    validity_end,
+	    min_limit_amount,
+	    max_use_count,
+	    use_detail,
+	    use_notice,
+	    publish_date_start,
+	    publish_date_end,
+	    publish_type,
+	    publish_population,
+	    pic,
+	    audit_status,
+	    audit_user_id,
+	    ctime,
+	    mtime,
+	    create_user_id
+	   from coupon_content
+	   where 
+	    coupon_id=#{couponId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     coupon_id,
+	     coupon_type,
+	     category_id,
+	     code,
+	     coupon_name,
+	     amount,
+	     undertake_amount,
+	     bank_subsidy,
+	     count,
+	     validity_start,
+	     validity_end,
+	     min_limit_amount,
+	     max_use_count,
+	     use_detail,
+	     use_notice,
+	     publish_date_start,
+	     publish_date_end,
+	     publish_type,
+	     publish_population,
+	     pic,
+	     audit_status,
+	     audit_user_id,
+	     ctime,
+	     mtime,
+	     create_user_id
+	   from coupon_content
+	   <where>
+	     <if test="couponId != null">
+	        coupon_id=#{couponId}
+	     </if>
+	     <if test="couponType != null">
+	        and coupon_type=#{couponType}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="code != null">
+	        and code=#{code}
+	     </if>
+	     <if test="couponName != null">
+	        and coupon_name=#{couponName}
+	     </if>
+	     <if test="amount != null">
+	        and amount=#{amount}
+	     </if>
+	     <if test="undertakeAmount != null">
+	        and undertake_amount=#{undertakeAmount}
+	     </if>
+	     <if test="bankSubsidy != null">
+	        and bank_subsidy=#{bankSubsidy}
+	     </if>
+	     <if test="count != null">
+	        and count=#{count}
+	     </if>
+	     <if test="validityStart != null">
+	        and validity_start=#{validityStart}
+	     </if>
+	     <if test="validityEnd != null">
+	        and validity_end=#{validityEnd}
+	     </if>
+	     <if test="minLimitAmount != null">
+	        and min_limit_amount=#{minLimitAmount}
+	     </if>
+	     <if test="maxUseCount != null">
+	        and max_use_count=#{maxUseCount}
+	     </if>
+	     <if test="useDetail != null">
+	        and use_detail=#{useDetail}
+	     </if>
+	     <if test="useNotice != null">
+	        and use_notice=#{useNotice}
+	     </if>
+	     <if test="publishDateStart != null">
+	        and publish_date_start=#{publishDateStart}
+	     </if>
+	     <if test="publishDateEnd != null">
+	        and publish_date_end=#{publishDateEnd}
+	     </if>
+	     <if test="publishType != null">
+	        and publish_type=#{publishType}
+	     </if>
+	     <if test="publishPopulation != null">
+	        and publish_population=#{publishPopulation}
+	     </if>
+	     <if test="pic != null">
+	        and pic=#{pic}
+	     </if>
+	     <if test="auditStatus != null">
+	        and audit_status=#{auditStatus}
+	     </if>
+	     <if test="auditUserId != null">
+	        and audit_user_id=#{auditUserId}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="createUserId != null">
+	        and create_user_id=#{createUserId}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     coupon_id,
+	     coupon_type,
+	     category_id,
+	     code,
+	     coupon_name,
+	     amount,
+	     undertake_amount,
+	     bank_subsidy,
+	     count,
+	     validity_start,
+	     validity_end,
+	     min_limit_amount,
+	     max_use_count,
+	     use_detail,
+	     use_notice,
+	     publish_date_start,
+	     publish_date_end,
+	     publish_type,
+	     publish_population,
+	     pic,
+	     audit_status,
+	     audit_user_id,
+	     ctime,
+	     mtime,
+	     create_user_id
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from coupon_content
+	   <where>
+	     <if test="couponId != null">
+	        coupon_id=#{couponId}
+	     </if>
+	     <if test="startDate != null ">
+	        and ctime &gt;= #{startDate}
+	     </if>
+	     <if test="endDate != null ">
+	        and ctime &lt;= #{endDate}
+	     </if>
+	     <if test="couponType != null">
+	        and coupon_type=#{couponType}
+	     </if>
+	     <if test="code != null and code !=''">
+	        and code=#{code}
+	     </if>
+	     <if test="auditStatus != null">
+	        and audit_status=#{auditStatus}
+	     </if>     
+	<!--       <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     
+	     <if test="couponName != null">
+	        and coupon_name=#{couponName}
+	     </if>
+	     <if test="amount != null">
+	        and amount=#{amount}
+	     </if>
+	     <if test="undertakeAmount != null">
+	        and undertake_amount=#{undertakeAmount}
+	     </if>
+	     <if test="bankSubsidy != null">
+	        and bank_subsidy=#{bankSubsidy}
+	     </if>
+	     <if test="count != null">
+	        and count=#{count}
+	     </if>
+	     <if test="validityStart != null">
+	        and validity_start=#{validityStart}
+	     </if>
+	     <if test="validityEnd != null">
+	        and validity_end=#{validityEnd}
+	     </if>
+	     <if test="minLimitAmount != null">
+	        and min_limit_amount=#{minLimitAmount}
+	     </if>
+	     <if test="maxUseCount != null">
+	        and max_use_count=#{maxUseCount}
+	     </if>
+	     <if test="useDetail != null">
+	        and use_detail=#{useDetail}
+	     </if>
+	     <if test="useNotice != null">
+	        and use_notice=#{useNotice}
+	     </if>
+	     <if test="publishDateStart != null">
+	        and publish_date_start=#{publishDateStart}
+	     </if>
+	     <if test="publishDateEnd != null">
+	        and publish_date_end=#{publishDateEnd}
+	     </if>
+	     <if test="publishType != null">
+	        and publish_type=#{publishType}
+	     </if>
+	     <if test="publishPopulation != null">
+	        and publish_population=#{publishPopulation}
+	     </if>
+	     <if test="pic != null">
+	        and pic=#{pic}
+	     </if>
+	     
+	     <if test="auditUserId != null">
+	        and audit_user_id=#{auditUserId}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="createUserId != null">
+	        and create_user_id=#{createUserId}
+	     </if> -->
+	   </where>
+	</sql>
+
+	
+</mapper> 

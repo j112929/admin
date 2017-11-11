@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【商品分类】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-08
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.goods.GoodsCategoryDao">
+
+	<resultMap id="goodsCategoryResultMap" type="com.bluemobi.po.goods.GoodsCategory">
+		<id property="id" column="id" />
+       <result property="name" column="name" />
+       <result property="pId" column="p_id" />
+       <result property="grade" column="grade" />
+       <result property="pic" column="pic" />
+       <result property="sortOrder" column="sort_order" />
+       <result property="status" column="status" />
+       <result property="creator" column="creator" />
+       <result property="ctime" column="ctime" />
+       <result property="modifier" column="modifier" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="goodsCategoryResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="goodsCategoryResultMap"></resultMap>
+	
+	<resultMap id="firstResultMap"  type="com.bluemobi.to.goods.FirstCategoryTO" >
+		<result property="firstCategoryId" column="id" />
+		<result property="firstCategoryName" column="name" />
+		<result property="firstSortOrder" column="sort_order" />
+		<result property="secondCategoryAmount" column="count(id)"/>
+	</resultMap>
+	<resultMap id="secondResultMap"  type="com.bluemobi.to.goods.SecondCategoryTO" >
+		<result property="secondCategoryId" column="id" />
+		<result property="firstCategoryName" column="name" />
+		<result property="secondCategoryName" column="name" />
+		<result property="secondSortOrder" column="sort_order" />
+		<result property="thirdCategoryAmount" column="count(id)" />
+	</resultMap>
+	<resultMap id="thirdResultMap"  type="com.bluemobi.to.goods.ThirdCategoryTO" >
+		<result property="thirdCategoryId" column="id" />
+		<result property="secondCategoryId" column="id" />
+		<result property="firstCategoryId" column="id" />
+		<result property="firstCategoryName" column="name" />
+		<result property="secondCategoryName" column="name" />
+		<result property="thirdCategoryName" column="name" />
+		<result property="pic" column="pic" />
+		<result property="thirdSortOrder" column="sort_order" />
+	</resultMap> 
+		
+	<select id="selectFirstCategory" parameterType="map" resultMap="firstResultMap">
+		SELECT 
+			g.id,
+			g.name,
+			g.sort_order,
+			(select count(id) from goods_category where grade = 2 and p_id = g.id) secondCategoryAmount
+		from 
+			goods_category g
+		<where>
+			g.grade = 1
+			<if test="firstCategoryId != null">
+		        and g.id=#{firstCategoryId}
+		     </if>
+			<if test="firstCategoryName != null">
+				and	name LIKE CONCAT(CONCAT('%', #{firstCategoryName}), '%')
+			</if>
+		</where>
+		 
+		<if test="offset!=null">
+		limit #{offset}
+		</if>
+		<if test="rows!=null">
+			,#{rows}
+		</if>
+	</select>
+	<select id="pageCountFirst" parameterType="map" resultType="int">
+	   select count(1)
+	   from 
+			goods_category 
+	   <where>
+			grade = 1
+			<if test="firstCategoryId != null">
+		        and g.id=#{firstCategoryId}
+		     </if>
+			<if test="firstCategoryName != null">
+				and	name LIKE CONCAT(CONCAT('%', #{firstCategoryName}), '%')
+			</if>
+		</where>
+	</select>
+	<select id="selectSecondCategory" parameterType="map" resultMap="secondResultMap">
+		SELECT
+			g2.id,
+			g1. NAME firstCategoryName,
+			g2. NAME secondCategoryName,
+			g2.sort_order,
+			(
+				SELECT
+					count(g3.id)
+				FROM
+					goods_category g3
+				WHERE
+					g3.grade = 3
+				AND g3.p_id = g2.id
+			) thirdCategoryAmount
+		FROM
+			goods_category g1,
+			goods_category g2
+        <where>
+			g1.grade = 1
+			AND g2.grade = 2
+			AND g2.p_id = g1.id
+			<if test="secondCategoryId != null">
+		        and g2.id=#{secondCategoryId}
+		     </if>
+            <if test="secondCategoryName != null">
+			    and g2.name LIKE CONCAT(CONCAT('%', #{secondCategoryName}), '%')
+			</if>
+			<if test="pId != null">
+				and g1.id = #{pId}
+			</if>
+        </where>
+        <if test="offset!=null">
+			limit #{offset}
+		</if>
+		<if test="rows!=null">
+			,#{rows}
+		</if>
+	</select>
+	<select id="pageCountSecond" parameterType="map" resultType="int">
+	   select count(1)
+	   from 
+			goods_category g1,
+			goods_category g2
+	   <where>
+			 g1.grade = 1 
+             and g2.grade = 2 
+			 and g2.p_id = g1.id 
+			 <if test="secondCategoryId != null">
+		        and g2.id=#{secondCategoryId}
+		     </if>
+            <if test="secondCategoryName != null">
+			    and g2.name LIKE CONCAT(CONCAT('%', #{secondCategoryName}), '%')
+			</if>
+			<if test="pId != null">
+				and g1.id = #{pId}
+			</if>
+		</where>
+	</select>
+	<select id="selectThirdCategory" parameterType="map" resultMap="thirdResultMap">
+		SELECT
+			g3.id thirdCategoryId,
+			g2.id secondCategoryId,
+			g1.id firstCategoryId,
+			g1.NAME firstCategoryName,
+			g2.NAME secondCategoryName,
+			g3.NAME thirdCategoryName,
+			g3.pic,
+		    g3.sort_order
+		FROM
+			goods_category g1,
+			goods_category g2,
+			goods_category g3
+		<where>
+			g1.grade = 1
+			AND g2.grade = 2
+			AND g3.grade = 3
+			AND g2.p_id = g1.id
+			AND g2.id = g3.p_id
+			<if test="thirdCategoryId != null">
+		        and g3.id=#{thirdCategoryId}
+		     </if>
+			<if test="thirdCategoryName != null">
+			    and g3.name LIKE CONCAT(CONCAT('%', #{thirdCategoryName}), '%')
+			</if>
+			<if test="pId != null">
+			    and g2.id = #{pId}
+			</if>
+			<if test="ppId != null">
+				and g1.id = #{ppId}
+			</if>
+		</where>
+		<if test="offset!=null">
+			limit #{offset}
+		</if>
+		<if test="rows!=null">
+			,#{rows}
+		</if>
+	</select>
+	<select id="pageCountThird" parameterType="map" resultType="int">
+	   select count(1)
+	   from 
+			goods_category g1,
+			goods_category g2,
+			goods_category g3
+	   <where>
+			 g1.grade = 1 
+             and g2.grade = 2 
+             and g3.grade = 3
+			 and g2.p_id = g1.id 
+			 and g2.id = g3.p_id
+			 <if test="thirdCategoryId != null">
+		        and g3.id=#{thirdCategoryId}
+		     </if>
+			<if test="thirdCategoryName != null">
+			    and g3.name LIKE CONCAT(CONCAT('%', #{thirdCategoryName}), '%')
+			</if>
+			<if test="pId != null">
+			    and g2.id = #{pId}
+			</if>
+			<if test="ppId != null">
+				and g1.id = #{ppId}
+			</if>
+		</where>
+	</select>
+	<!-- 倒查三级分类，二级分类，一级分类 -->
+	<select id="selectThreeCategoryName" parameterType="map" resultType="java.util.Map" >
+		SELECT
+			a.id thirdCategoryId,
+			a. NAME thirdCategoryName,
+			b.id secondCategoryId,
+			b. NAME secondCategoryName,
+			c.id firstCategoryId,
+			c. NAME firstCategoryName
+		FROM
+			goods_category a,
+			goods_category b,
+			goods_category c
+		<where>
+			a.p_id = b.id
+			AND b.p_id = c.id
+			and a.grade = 3
+			<if test="thirdCategoryName!=null">
+				and a.name LIKE CONCAT(CONCAT('%', #{thirdCategoryName}), '%')
+			</if>
+			<if test="thirdCategoryId!=null">
+		     	AND a.id = #{thirdCategoryId}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="com.bluemobi.po.goods.GoodsCategory" useGeneratedKeys="true" keyProperty="id" >
+	   insert into goods_category (
+	     id,
+	     name,
+	     p_id,
+	     grade,
+	     pic,
+	     sort_order,
+	     status,
+	     creator,
+	     ctime,
+	     modifier,
+	     mtime
+	   )values (
+	     #{id},
+	     #{name},
+	     #{pId},
+	     #{grade},
+	     #{pic},
+	     #{sortOrder},
+	     #{status},
+	     #{creator},
+	     #{ctime},
+	     #{modifier},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.goods.GoodsCategory">
+		update goods_category
+		<set>
+			<if test="id != null">
+				id=#{id},
+			</if>
+			<if test="name != null">
+				name=#{name},
+			</if>
+			<if test="pId != null">
+				p_id=#{pId},
+			</if>
+			<if test="grade != null">
+				grade=#{grade},
+			</if>
+			<if test="pic != null">
+				pic=#{pic},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="creator != null">
+				creator=#{creator},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="modifier != null">
+				modifier=#{modifier},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     goods_category 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="goodsCategoryResultMap">
+	   select 
+	    id,
+	    name,
+	    p_id,
+	    grade,
+	    pic,
+	    sort_order,
+	    status,
+	    creator,
+	    ctime,
+	    modifier,
+	    mtime
+	   from goods_category
+	   where 
+	    id=#{id} 
+	</select>
+	<select id="selectByCategoryName" parameterType="map" resultMap="goodsCategoryResultMap">
+		select 
+	     id,
+	     name,
+	     p_id,
+	     grade,
+	     pic,
+	     sort_order,
+	     status,
+	     creator,
+	     ctime,
+	     modifier,
+	     mtime
+	   from goods_category
+	   <where>
+	   	  <if test="name != null">
+	        name LIKE CONCAT(CONCAT('%', #{name}), '%')
+	     </if>
+	     <if test="grade != null">
+	        and grade in #{grade}
+	     </if>
+	   </where>
+	</select>
+	<select id="selectObjectList" parameterType="map" resultMap="goodsCategoryResultMap">
+	   select 
+	     id,
+	     name,
+	     p_id,
+	     grade,
+	     pic,
+	     sort_order,
+	     status,
+	     creator,
+	     ctime,
+	     modifier,
+	     mtime
+	   from goods_category
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="name != null">
+	        and name LIKE CONCAT(CONCAT('%', #{name}), '%')
+	     </if>
+	     <if test="pId != null">
+	        and p_id=#{pId}
+	     </if>
+	     <if test="grade != null">
+	        and grade=#{grade}
+	     </if>
+	     <if test="pic != null">
+	        and pic=#{pic}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="creator != null">
+	        and creator=#{creator}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="modifier != null">
+	        and modifier=#{modifier}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    name,
+	    p_id,
+	    grade,
+	    pic,
+	    sort_order,
+	    status,
+	    creator,
+	    ctime,
+	    modifier,
+	    mtime
+	   from goods_category
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     name,
+	     p_id,
+	     grade,
+	     pic,
+	     sort_order,
+	     status,
+	     creator,
+	     ctime,
+	     modifier,
+	     mtime
+	   from goods_category
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="pId != null">
+	        and p_id=#{pId}
+	     </if>
+	     <if test="grade != null">
+	        and grade=#{grade}
+	     </if>
+	     <if test="pic != null">
+	        and pic=#{pic}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="creator != null">
+	        and creator=#{creator}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="modifier != null">
+	        and modifier=#{modifier}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     name,
+	     p_id,
+	     grade,
+	     pic,
+	     sort_order,
+	     status,
+	     creator,
+	     ctime,
+	     modifier,
+	     mtime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from goods_category
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="pId != null">
+	        and p_id=#{pId}
+	     </if>
+	     <if test="grade != null">
+	        and grade=#{grade}
+	     </if>
+	     <if test="pic != null">
+	        and pic=#{pic}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="creator != null">
+	        and creator=#{creator}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="modifier != null">
+	        and modifier=#{modifier}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</sql>
+	
+</mapper> 

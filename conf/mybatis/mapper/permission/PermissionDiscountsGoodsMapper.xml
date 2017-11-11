@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠折扣关联商品表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-09-05 14:52:22
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.permission.PermissionDiscountsGoodsDao">
+
+	<resultMap id="permissionDiscountsGoodsResultMap" type="com.bluemobi.po.permission.PermissionDiscountsGoods">
+		<id property="id" column="id" />
+       <result property="discountId" column="discount_id" />
+       <result property="price" column="price" />
+       <result property="skuId" column="sku_id" />
+       <result property="goodsName" column="goods_name" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="permissionDiscountsGoodsResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="permissionDiscountsGoodsResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.permission.PermissionDiscountsGoods" useGeneratedKeys="true" keyProperty="id" >
+	   insert into permission_discounts_goods (
+	     id,
+	     discount_id,
+	     price,
+	     sku_id,
+	     goods_name
+	   )values (
+	     #{id},
+	     #{discountId},
+	     #{price},
+	     #{skuId},
+	     #{goodsName}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.permission.PermissionDiscountsGoods">
+		update permission_discounts_goods
+		<set>
+			<if test="id != null">
+				id=#{id},
+			</if>
+			<if test="discountId != null">
+				discount_id=#{discountId},
+			</if>
+			<if test="price != null">
+				price=#{price},
+			</if>
+			<if test="skuId != null">
+				sku_id=#{skuId},
+			</if>
+			<if test="goodsName != null">
+				goods_name=#{goodsName},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     permission_discounts_goods 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="permissionDiscountsGoodsResultMap">
+	   select 
+	    id,
+	    discount_id,
+	    price,
+	    sku_id,
+	    goods_name
+	   from permission_discounts_goods
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="permissionDiscountsGoodsResultMap">
+	   select 
+	     id,
+	     discount_id,
+	     price,
+	     sku_id,
+	     goods_name
+	   from permission_discounts_goods
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="discountId != null">
+	        and discount_id=#{discountId}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="skuId != null">
+	        and sku_id=#{skuId}
+	     </if>
+	     <if test="goodsName != null">
+	        and goods_name=#{goodsName}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    discount_id,
+	    price,
+	    sku_id,
+	    goods_name
+	   from permission_discounts_goods
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     discount_id,
+	     price,
+	     sku_id,
+	     goods_name
+	   from permission_discounts_goods
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="discountId != null">
+	        and discount_id=#{discountId}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="skuId != null">
+	        and sku_id=#{skuId}
+	     </if>
+	     <if test="goodsName != null">
+	        and goods_name=#{goodsName}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     discount_id,
+	     price,
+	     sku_id,
+	     goods_name
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from permission_discounts_goods
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="discountId != null">
+	        and discount_id=#{discountId}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="skuId != null">
+	        and sku_id=#{skuId}
+	     </if>
+	     <if test="goodsName != null">
+	        and goods_name=#{goodsName}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 
